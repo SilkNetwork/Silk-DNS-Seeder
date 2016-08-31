@@ -1,18 +1,18 @@
-silk-seeder
+Silk-Seeder
 ===========
 
-Silk-seeder crawls the Silk network in order to assemble a list
+Silk-Seeder crawls the Silk network in order to assemble a list
 of reliable nodes via its own built-in DNS server.
 
 Features:
-* regularly revisits known nodes to check their availability
-* bans nodes after enough failures, or bad behaviour
-* accepts nodes running, at the least, v1.0.0.0 to request new IP addresses from,
+* Regularly revisits known nodes to check their availability
+* Bans nodes after enough failures, or bad behaviour
+* Accepts nodes running, at the least, v1.0.0.0 to request new IP addresses from,
   but it only reports "good" nodes; defined as nodes that run the latest release, v1.0.0.0.
-* keeps statistics over (exponential) windows of 2 hours, 8 hours,
+* Keeps statistics over (exponential) windows of 2 hours, 8 hours,
   1 day and 1 week, to base decisions on.
-* very low memory (a few tens of megabytes) and cpu requirements.
-* crawlers run in parallel (by default 96 threads simultaneously).
+* Very low memory (a few tens of megabytes) and cpu requirements.
+* Crawlers run in parallel (by default 96 threads simultaneously).
 
 REQUIREMENTS
 ------------
