@@ -196,7 +196,6 @@ class CDnsThread {
 public:
   dns_opt_t dns_opt; // must be first
   const int id;
-  vector<addr_t> cache;
   std::map<uint64_t, vector<addr_t> > cache;
   int nIPv4, nIPv6;
   std::map<uint64_t, time_t> cacheTime;
@@ -393,13 +392,13 @@ extern "C" void* ThreadStats(void*) {
   } while(1);
 }
 
-static const string mainnet_seeds[] = {"darksilk.org", "sc1.darksilk.org", ""};
+static const string mainnet_seeds[] = {"seed1.silknetwork.org", "seed2.silknetwork.org", ""};
 static const string testnet_seeds[] = {"", ""};
 static const string *seeds = mainnet_seeds;
 
 extern "C" void* ThreadSeeder(void*) {
   if (!fTestNet){                        //TODO: Create Tor Seeds
-  //  db.Add(CService("kjy2eqzk4zwi5zd3.onion", 31000), true);
+  //  db.Add(CService("silknetwork.onion", 16666), true);
   }
   do {
     for (int i=0; seeds[i] != ""; i++) {

@@ -5,8 +5,8 @@
 #include "protocol.h"
 #include "serialize.h"
 #include "uint256.h"
-                          //TODO: Update to SLK Nonce
-#define SILK_SEED_NONCE  0x0539a019ca550825ULL
+                          
+#define SILK_SEED_NONCE  0x65E6FDF
 
 using namespace std;
 
@@ -300,7 +300,7 @@ bool TestNode(const CService &cip, int &ban, int &clientV, std::string &clientSV
 
 /*
 int main(void) {
-  CService ip("bitcoin.sipa.be", 8333, true);
+  CService ip("silknetwork.org", 16666, true);
   vector<CAddress> vAddr;
   vAddr.clear();
   int ban = 0;
