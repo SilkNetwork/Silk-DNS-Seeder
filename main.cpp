@@ -392,13 +392,13 @@ extern "C" void* ThreadStats(void*) {
   } while(1);
 }
 
-static const string mainnet_seeds[] = {"seed1.silknetwork.org", "seed2.silknetwork.org", ""};
+static const string mainnet_seeds[] = {"slk1.silknetwork.net", "slk2.silknetwork.net", ""};
 static const string testnet_seeds[] = {"", ""};
 static const string *seeds = mainnet_seeds;
 
 extern "C" void* ThreadSeeder(void*) {
   if (!fTestNet){                        //TODO: Create Tor Seeds
-  //  db.Add(CService("silknetwork.onion", 16666), true);
+  //  db.Add(CService("silknetwork.onion", 16662), true);
   }
   do {
     for (int i=0; seeds[i] != ""; i++) {
