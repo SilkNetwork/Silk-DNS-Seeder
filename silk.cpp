@@ -6,7 +6,7 @@
 #include "serialize.h"
 #include "uint256.h"
                           
-#define SILK_SEED_NONCE  0x65E6FDF
+#define SILK_SEED_NONCE  0x2383C23
 
 using namespace std;
 
@@ -300,7 +300,7 @@ bool TestNode(const CService &cip, int &ban, int &clientV, std::string &clientSV
 
 /*
 int main(void) {
-  CService ip("silknetwork.org", 16666, true);
+  CService ip("silknetwork.org", 16662, true);
   vector<CAddress> vAddr;
   vAddr.clear();
   int ban = 0;
