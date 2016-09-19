@@ -19,6 +19,15 @@ REQUIREMENTS
 
 $ sudo apt-get install build-essential libboost-all-dev libssl-dev php5-cli php5-curl
 
+Assuming you want to run a dns seed on dnsseed.example.com, you will
+need an authorative NS record in example.com's domain record, pointing
+to for example vps.example.com:
+
+$ dig -t NS dnsseed.example.com
+
+;; ANSWER SECTION
+dnsseed.example.com.   86400    IN      NS     vps.example.com.
+
 
 COMPILING
 ---------
@@ -43,34 +52,25 @@ $ php /path/to/Silk-Seeder/cf-php/cf.php
 
 Have a cronjob run cf-php regularly. This will run the cf.php script every minute.
 
-USAGE
------
-
-Assuming you want to run a dns seed on dnsseed.example.com, you will
-need an authorative NS record in example.com's domain record, pointing
-to for example vps.example.com:
-
-$ dig -t NS dnsseed.example.com
-
-;; ANSWER SECTION
-dnsseed.example.com.   86400    IN      NS     vps.example.com.
-
-
-$ ./dnsseed
-
-If you want the DNS server to report SOA records, please provide an
-e-mailadres (with the @ part replaced by .) using -m.
-
 
 RUNNING AS NON-ROOT
 -------------------
 
-Typically, you'll need root privileges to listen to port 53 (name service).
+A DNS server typically listens on UPD port 53.  However, to bind to a priviledged port 
+(i.e. a port less than 1024), it is necessary to do one of the following:
 
-One solution is using an iptables rule (Linux only) to redirect it to
-a non-privileged port:
+ 1. Run as root (not recommended).
+ 2. Redirect port 53 to a non-priviledged port, such as with iptables.
+ 3. Use POSIX capabilities (in Linux with support) to allow binding.
 
-$ iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port 5353
+To use an iptables rule (Linux only) to redirect it to a non-privileged port:
+
+    iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port 5353
 
 If properly configured, this will allow you to run dnsseed in userspace, using
-the -p 5353 option.
+the `-p 5353` option.
+
+Alternatively, non-root binding to privileged ports is possible on Linux supporting 
+"POSIX capabilities".  If the `setcap` and `getcap` commands are available,
+
+    sudo setcap cap_net_bind_service=+ep /path/to/dnsseed
