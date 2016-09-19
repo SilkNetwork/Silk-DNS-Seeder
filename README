@@ -17,7 +17,31 @@ Features:
 REQUIREMENTS
 ------------
 
-$ sudo apt-get install build-essential libboost-all-dev libssl-dev
+$ sudo apt-get install build-essential libboost-all-dev libssl-dev php5-cli php5-curl
+
+
+COMPILING
+---------
+Compiling will require boost and ssl.  On debian systems, these are provided
+by `libboost-dev` and `libssl-dev` respectively.
+
+$ make
+
+$ chmod +x dnsseed
+
+$ ./dnsseed
+
+OR
+
+$ screen -dmS <subdomain> sh -c './dnsseed"
+
+To initiate a screen session, detach the screen session with CTRL+A+D
+
+$ crontab -e
+
+$ php /path/to/Silk-Seeder/cf-php/cf.php
+
+Have a cronjob run cf-php regularly. This will run the cf.php script every minute.
 
 USAGE
 -----
@@ -31,21 +55,11 @@ $ dig -t NS dnsseed.example.com
 ;; ANSWER SECTION
 dnsseed.example.com.   86400    IN      NS     vps.example.com.
 
-On the system vps.example.com, you can now run dnsseed:
 
-./dnsseed -h dnsseed.example.com -n vps.example.com
+$ ./dnsseed
 
 If you want the DNS server to report SOA records, please provide an
 e-mailadres (with the @ part replaced by .) using -m.
-
-COMPILING
----------
-Compiling will require boost and ssl.  On debian systems, these are provided
-by `libboost-dev` and `libssl-dev` respectively.
-
-$ make
-
-This will produce the `dnsseed` binary.
 
 
 RUNNING AS NON-ROOT
