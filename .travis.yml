@@ -1,0 +1,16 @@
+language: cpp
+compiler: gcc
+os: linux
+sudo: required
+dist: trusty
+install:
+  - sudo apt-get install -y build-essential libboost-all-dev libssl-dev php5-cli php5-curl
+script:
+  - make
+
+deploy:
+  provider: releases
+  file: "silk-seeder"
+  skip_cleanup: true
+  on:
+    tags: true
