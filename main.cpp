@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <unistd.h>
 
 #include "silk.h"
 #include "db.h"
@@ -20,6 +21,7 @@ public:
   int nThreads;
   int nPort;
   int nDnsThreads;
+  int fDaemon;
   int fUseTestNet;
   int fWipeBan;
   int fWipeIgnore;
@@ -31,7 +33,7 @@ public:
   const char *ipv6_proxy;
   std::set<uint64_t> filter_whitelist;
 
-  CDnsSeedOpts() : nThreads(96), nDnsThreads(4), nPort(53), mbox(NULL), ns(NULL), host(NULL), tor(NULL), fUseTestNet(false), fWipeBan(false), fWipeIgnore(false), ipv4_proxy(NULL), ipv6_proxy(NULL) {}
+  CDnsSeedOpts() : nThreads(96), nDnsThreads(4), nPort(53), mbox(NULL), ns(NULL), host(NULL), tor(NULL), fDaemon(false), fUseTestNet(false), fWipeBan(false), fWipeIgnore(false), ipv4_proxy(NULL), ipv6_proxy(NULL) {}
 
   void ParseCommandLine(int argc, char **argv) {
     static const char *help = "silk-seeder\n"
@@ -48,6 +50,7 @@ public:
                               "-i <ip:port>    IPV4 SOCKS5 proxy IP/Port\n"
                               "-k <ip:port>    IPV6 SOCKS5 proxy IP/Port\n"
                               "-w f1,f2,...    Allow these flag combinations as filters\n"
+                              "--daemon"       "Run as a daemon\n"
                               "--testnet       Use testnet\n"
                               "--wipeban       Wipe list of banned nodes\n"
                               "--wipeignore    Wipe list of ignored nodes\n"
@@ -67,6 +70,7 @@ public:
         {"proxyipv4", required_argument, 0, 'i'},
         {"proxyipv6", required_argument, 0, 'k'},
         {"filter", required_argument, 0, 'w'},
+        {"daemon", no_argument, &fDaemon, 1},
         {"testnet", no_argument, &fUseTestNet, 1},
         {"wipeban", no_argument, &fWipeBan, 1},
         {"wipeignore", no_argument, &fWipeBan, 1},
@@ -392,7 +396,7 @@ extern "C" void* ThreadStats(void*) {
   } while(1);
 }
 
-static const string mainnet_seeds[] = {"slk1.silknetwork.net", "slk2.silknetwork.net", ""};
+static const string mainnet_seeds[] = {"127.0.0.1:62223", "162.243.163.103:62223", ""};
 static const string testnet_seeds[] = {"", ""};
 static const string *seeds = mainnet_seeds;
 
@@ -467,6 +471,12 @@ int main(int argc, char **argv) {
   if (fDNS && !opts.mbox) {
     fprintf(stderr, "No e-mail address set. Please use -m.\n");
     exit(1);
+  }
+  if (opts.fDaemon) {
+    if (daemon(1, 0) == -1) {
+      perror("daemon");
+      exit(1);
+    }
   }
   FILE *f = fopen("dnsseed.dat","r");
   if (f) {
