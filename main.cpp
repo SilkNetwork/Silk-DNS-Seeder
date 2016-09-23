@@ -396,7 +396,7 @@ extern "C" void* ThreadStats(void*) {
   } while(1);
 }
 
-static const string mainnet_seeds[] = {"107.191.48.40:62223", "104.238.186.122:62223" "162.243.163.103:62223", ""};
+static const string mainnet_seeds[] = {"45.32.7.212:62223", "162.243.163.103:62223", ""};
 static const string testnet_seeds[] = {"", ""};
 static const string *seeds = mainnet_seeds;
 
