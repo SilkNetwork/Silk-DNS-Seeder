@@ -1,7 +1,7 @@
 <?php
 $domain ="silknetwork.net";
 $name = "subdomain"; //subdomain e.g. name.domain.com 
-$number_of_records = 10; //maximum n A records with $name... 10 recommended 
+$number_of_records = 100; //maximum n A records with $name... 100 recommended 
 $user = "emailofcloudflareaccount"; //user name
 $key = "yourapikey"; //key for cloudflare api found in account settings
 $seed_dump = "/path/to/dnsseed.dump"; //absolute path to dnsseed.dump in the Silk-Seeder root directory 
