@@ -48,5 +48,5 @@ accordingly. (The number_of_records in the table displayed above is "10" and I t
 4. Have a cronjob run cf-php regularly
 
     crontab -e
-    * * * * * php ~/bitcoin-seeder/cf-php/cf.php
+    1,7,14,20,25,33,37,43,49,55 * * * * cd /path/to/Silk-Seeder/cf-php && php cf.php
 
